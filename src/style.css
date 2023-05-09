@@ -1,0 +1,9 @@
+  .article-button{
+    margin: 0 4% 0 4%;
+    width: 8rem;
+  }
+  @media (max-width: 991px) {
+    .article-button {
+      margin-top: 8%;
+    }
+  }

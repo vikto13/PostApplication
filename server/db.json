@@ -1,0 +1,23 @@
+{
+  "authors": [
+    {
+      "id": 0,
+      "name": "Viktorija",
+      "created_at": "2023-05-05T11:09:02.600Z",
+      "updated_at": "2023-05-05T11:09:02.600Z"
+    },
+    {
+      "id": 1,
+      "name": "Tomas",
+      "created_at": "2023-05-05T11:09:02.600Z",
+      "updated_at": "2023-05-05T11:09:02.600Z"
+    },
+    {
+      "id": 2,
+      "name": "Austeja",
+      "created_at": "2023-05-05T11:09:02.600Z",
+      "updated_at": "2023-05-05T11:09:02.600Z"
+    }
+  ],
+  "articles": []
+}
