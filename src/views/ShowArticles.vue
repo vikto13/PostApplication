@@ -1,11 +1,11 @@
 <template>
     <div class="container">
         <alert></alert>
+        <article-table></article-table>
         <button class="btn btn-primary d-flex" @click="createArticle()">
             Create Article
         </button>
         <create-article> </create-article>
-        <article-table></article-table>
     </div>
 </template>
 

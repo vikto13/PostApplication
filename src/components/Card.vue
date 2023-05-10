@@ -1,5 +1,28 @@
 <template>
-    <div class="col-sm-6" style="margin-bottom: 5%">
+    <div class="card" style="margin-bottom: 2%">
+        <div class="card-body">
+            <div class="row row-cols-2 row-cols-lg-6 g-2 g-lg-3">
+                <div class="col">
+                    <div class="p-3">{{ size }}</div>
+                </div>
+                <div v-for="(text, index) in texts" :key="index" class="col">
+                    <div class="p-3">{{ text }}</div>
+                </div>
+
+                <div class="p-3">
+                    <select
+                        class="form-select"
+                        style="width: 15%; border-radius: 15%; border-width: 0"
+                    >
+                        <option value="1">Edit</option>
+                        <option value="2">Delete</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="col-sm-6" style="margin-bottom: 5%">
         <div class="card text-center">
             <div class="card-header" style="text-align: start">
                 {{ headerText }}
@@ -25,32 +48,18 @@
                 {{ footerText }}
             </div>
         </div>
-    </div>
+    </div> -->
 </template>
 <script>
 export default {
     props: {
-        'header-text': {
-            type: String,
-            defaul: '',
-        },
-        title: {
-            type: String,
-            defaul: '',
-        },
-        'body-text': {
-            type: String,
-            defaul: '',
-        },
-        buttons: {
+        texts: {
             type: Array,
-            defaul: ['Ok'],
-        },
-        'footer-text': {
-            type: String,
-            defaul: '',
         },
         id: {
+            type: Number,
+        },
+        size: {
             type: Number,
         },
     },

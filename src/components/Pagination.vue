@@ -61,7 +61,9 @@ export default {
             let { currentPage, pageSlice } = this.pagination
             let size = Math.ceil(this.itemsSize / pageSlice)
 
-            currentPage == size && Number.isInteger(this.itemsSize / 4)
+            currentPage == size &&
+            Number.isInteger(this.itemsSize / 4) &&
+            currentPage
                 ? (this.$store.commit('decreasePage'),
                   (currentPage = currentPage - 1))
                 : null
