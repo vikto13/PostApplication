@@ -5,11 +5,12 @@
                 <ul class="nav nav-pills card-header-pills">
                     <li
                         v-for="(component, index) in components"
+                        :key="index"
                         class="nav-item"
                     >
                         <a
                             class="nav-link navbar-light"
-                            :class="index == shows ? 'active' : null"
+                            :class="index == shows ? 'active disabled' : null"
                             href="#"
                             @click="clickedNav(index)"
                             >{{ component.name }}</a
@@ -21,7 +22,6 @@
                 <alert></alert>
                 <component :is="components[shows].id"></component>
             </div>
-
             <component :is="article.create == false ? 'OutsideBox' : ''">
                 <component :is="article.create == false ? 'ModifyArticle' : ''">
                 </component>
@@ -29,12 +29,10 @@
         </div>
     </div>
 </template>
-
 <script>
 import Alert from '../components/Alert.vue'
 import ArticleTable from '../components/ArticleTable.vue'
 import ModifyArticle from '../components/ModifyArticle.vue'
-import CreateArticle from '../components/CreateArticle.vue'
 import OutsideBox from '../components/OutsideBox.vue'
 import { mapActions, mapGetters } from 'vuex'
 export default {
@@ -43,7 +41,6 @@ export default {
         Alert,
         ArticleTable,
         ModifyArticle,
-        CreateArticle,
         OutsideBox,
     },
     data() {
@@ -62,7 +59,7 @@ export default {
         ...mapActions(['clearArticle', 'clearMessage', 'alertAction']),
         clickedNav(index) {
             this.clearArticle()
-            this.alertAction(false)
+            this.alertAction(null)
             index ? this.$store.commit('createArticle', true) : null
             this.shows = index
         },

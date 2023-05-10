@@ -23,7 +23,6 @@
                         :texts="[
                             `Author: ${article.author.name}`,
                             getDate(article),
-                            article.body,
                             article.title,
                         ]"
                         :size="
@@ -32,6 +31,7 @@
                             1
                         "
                         @pressed="cardButton"
+                        @pressedHeader="(id) => $router.push(`/article/${id}`)"
                     ></card>
                 </div>
                 <pagination :items-size="showArticles.length"> </pagination>
@@ -67,11 +67,6 @@ export default {
                 titleText: 'You want to delete this article',
                 bodyText: 'Are you sure?',
                 buttons: ['No', 'Yes'],
-            },
-            alertInfo: {
-                alertType: Styles.danger,
-                text: 0,
-                setTimer: true,
             },
         }
     },
@@ -123,7 +118,11 @@ export default {
                     await this.fetchArticles()
                     this.joinArticles()
                 } catch {
-                    this.alertTrigger()
+                    this.alertTrigger(
+                        Styles.danger,
+                        'something went wrong, try again',
+                        true
+                    )
                 }
             }
         },
@@ -132,11 +131,16 @@ export default {
                 await this.getArticle(id)
                 this.$store.commit('createArticle', false)
             } catch {
-                this.alertTrigger()
+                console.log('2222')
+                this.alertTrigger(
+                    Styles.danger,
+                    'something went wrong, try again',
+                    true
+                )
             }
         },
         cardButton({ target, id }) {
-            if (target.value - 1) {
+            if (target) {
                 this.articleId = id
                 this.messageTrigger()
             } else {

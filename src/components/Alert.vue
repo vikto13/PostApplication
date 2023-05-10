@@ -1,5 +1,9 @@
 <template>
-    <div v-show="alert.show" class="alert" :class="`alert-${alert.alertType}`">
+    <div
+        v-show="typeof alert.show == 'boolean'"
+        class="alert"
+        :class="`alert-${alert.alertType}`"
+    >
         {{ alert.text }}
     </div>
 </template>
@@ -19,14 +23,18 @@ export default {
     },
     watch: {
         'alert.show'() {
-            if (!this.isShowing && this.alert.setTimer) {
+            if (this.alert.show == null) {
+                this.alertAction(null)
+                return
+            } else if (!this.isShowing && this.alert.setTimer) {
                 this.isShowing = true
                 setTimeout(() => {
                     this.isShowing = false
                     this.alertAction(false)
+                    return
                 }, 3000)
-            } else if (!this.isShowing && !this.alert.setTimer) {
-                this.isShowing = true
+            } else {
+                this.isShowing = false
                 this.alertAction(true)
             }
         },

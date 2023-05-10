@@ -13,7 +13,6 @@ export default {
         toNextPage({ commit }, isNext) {
             commit("changePage", isNext)
         },
-
     },
     getters: {
         pagination: state => ({ ...state }),

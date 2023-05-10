@@ -20,10 +20,9 @@ export const MessageMixin = {
                 AlertState(
                     alertType,
                     text,
-                    setTimer
+                    setTimer,
                 )
             )
         }
-
     },
 }

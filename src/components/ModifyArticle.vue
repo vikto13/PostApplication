@@ -73,17 +73,11 @@
 </template>
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Message from './Message.vue'
-import Alert from './Alert.vue'
 import Styles from '../assets/Styles'
 import { DateMixin } from '../views/mixins/Date'
 import { MessageMixin } from '../views/mixins/Message'
 
 export default {
-    components: {
-        Message,
-        Alert,
-    },
     mixins: [DateMixin, MessageMixin],
     data() {
         return {
@@ -122,7 +116,6 @@ export default {
             this.$store.commit(whoUpdate, target.value)
         },
         async buttonPressed(index) {
-            console.log(this.article)
             let { author, body, title } = this.article
             if (!title || typeof author != 'number' || !body) {
                 this.article.create
@@ -157,7 +150,13 @@ export default {
                     }
                 }
             } catch {
-                this.showBoxMessage(2)
+                this.article.create
+                    ? this.alertTrigger(
+                          Styles.danger,
+                          'Something went wrong, try again',
+                          false
+                      )
+                    : this.showBoxMessage(3)
             }
         },
     },

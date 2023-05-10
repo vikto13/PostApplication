@@ -85,8 +85,6 @@ export default {
         joinArticles({ commit, getters }) {
             commit('setShowArticles', joinTables(getters.articleList, getters.authorsList))
         }
-
-
     },
     getters: {
         articleList: state => state.articles,
@@ -94,7 +92,6 @@ export default {
         showArticles: state => state.showArticles
     },
 }
-
 function joinTables(articleList, authorsList) {
     return articleList.map((article) => ({
         ...article,
