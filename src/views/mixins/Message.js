@@ -15,8 +15,7 @@ export const MessageMixin = {
                 )
             )
         },
-        alertTrigger() {
-            const { alertType, text, setTimer } = this.alertInfo
+        alertTrigger(alertType, text, setTimer) {
             this.showAlert(
                 AlertState(
                     alertType,

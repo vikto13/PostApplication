@@ -1,7 +1,7 @@
-export const MessageState = (messageType, titleText, bodyText, buttons) => ({
+export const MessageState = (messageType, titleText, bodyText, buttons, show) => ({
     messageType: messageType ? messageType : 'danger',
     titleText: titleText ? titleText : '',
     bodyText: bodyText ? bodyText : '',
     buttons: buttons ? buttons : ['ok'],
-    show: false,
+    show: typeof show == 'boolean' ? show : false,
 })

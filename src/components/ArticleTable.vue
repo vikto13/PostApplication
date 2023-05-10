@@ -1,70 +1,42 @@
 <template>
     <div v-if="articleList.length">
         <message @button-pressed="messagePressed"></message>
-        <div class="card text-bg-light">
-            <div class="card-header">
-                <ul class="nav nav-pills card-header-pills">
-                    <li class="nav-item">
-                        <a class="nav-link active navbar-light" href="#"
-                            >All articles</a
-                        >
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Create</a>
-                    </li>
-                </ul>
+
+        <div class="card-body">
+            <div class="form-outline mb-4">
+                <input
+                    type="search"
+                    class="form-control"
+                    placeholder="Search"
+                    v-model="searchText"
+                    v-debounce:1500="searching"
+                />
             </div>
 
-            <div class="card-body">
-                <div class="form-outline mb-4">
-                    <input
-                        type="search"
-                        class="form-control"
-                        placeholder="Search"
-                        v-model="searchText"
-                        v-debounce:1500="searching"
-                    />
+            <div v-if="showArticles.length">
+                <h1>All articles</h1>
+                <div class="row">
+                    <card
+                        v-for="(article, index) in articlePart"
+                        :key="article.id"
+                        :id="article.id"
+                        :texts="[
+                            `Author: ${article.author.name}`,
+                            getDate(article),
+                            article.body,
+                            article.title,
+                        ]"
+                        :size="
+                            pagination.currentPage * pagination.pageSlice +
+                            index +
+                            1
+                        "
+                        @pressed="cardButton"
+                    ></card>
                 </div>
-
-                <div v-if="showArticles.length">
-                    <h1>All articles</h1>
-                    <div class="row">
-                        <card
-                            v-for="(article, index) in articlePart"
-                            :key="article.id"
-                            :id="article.id"
-                            :texts="[
-                                `Author: ${article.author.name}`,
-                                getDate(article),
-                                article.body,
-                                article.title,
-                            ]"
-                            :size="
-                                pagination.currentPage * pagination.pageSlice +
-                                index +
-                                1
-                            "
-                            @pressed="cardButton"
-                        ></card>
-                    </div>
-                    <pagination :items-size="showArticles.length"> </pagination>
-                </div>
-                <h1 v-else>No articles found</h1>
-
-                <!-- <div
-                    v-for="article in articlePart"
-                    :key="article.id"
-                    class="card"
-                >
-                    <div class="card-body">
-                        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-                            <div class="col">
-                                <div class="p-3">Row column</div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                <pagination :items-size="showArticles.length"> </pagination>
             </div>
+            <h1 v-else>No articles found</h1>
         </div>
     </div>
     <h1 v-else>There are no created article</h1>
@@ -98,7 +70,7 @@ export default {
             },
             alertInfo: {
                 alertType: Styles.danger,
-                text: 'something went wrong, try again',
+                text: 0,
                 setTimer: true,
             },
         }
@@ -114,8 +86,6 @@ export default {
             let { currentPage, pageSlice } = this.pagination
             let show = currentPage * pageSlice
             let { length } = this.showArticles
-            console.log(currentPage, pageSlice)
-            console.log(length)
             return this.showArticles.slice(
                 show,
                 show + pageSlice < length ? show + pageSlice : length
@@ -165,12 +135,12 @@ export default {
                 this.alertTrigger()
             }
         },
-        cardButton({ index, id }) {
-            if (index) {
-                this.findArticle(id)
-            } else {
+        cardButton({ target, id }) {
+            if (target.value - 1) {
                 this.articleId = id
                 this.messageTrigger()
+            } else {
+                this.findArticle(id)
             }
         },
     },

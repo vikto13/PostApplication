@@ -9,6 +9,7 @@ export default {
             state.alertType = info.alertType
         },
         alertAction: (state, willShow) => {
+            console.log(willShow)
             state.show = willShow
         }
     },

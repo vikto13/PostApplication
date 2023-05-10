@@ -1,30 +1,70 @@
 <template>
     <div class="container">
-        <alert></alert>
-        <article-table></article-table>
-        <button class="btn btn-primary d-flex" @click="createArticle()">
-            Create Article
-        </button>
-        <create-article> </create-article>
+        <div class="card text-bg-light">
+            <div class="card-header" style="margin-bottom: 2%">
+                <ul class="nav nav-pills card-header-pills">
+                    <li
+                        v-for="(component, index) in components"
+                        class="nav-item"
+                    >
+                        <a
+                            class="nav-link navbar-light"
+                            :class="index == shows ? 'active' : null"
+                            href="#"
+                            @click="clickedNav(index)"
+                            >{{ component.name }}</a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <div class="container">
+                <alert></alert>
+                <component :is="components[shows].id"></component>
+            </div>
+
+            <component :is="article.create == false ? 'OutsideBox' : ''">
+                <component :is="article.create == false ? 'ModifyArticle' : ''">
+                </component>
+            </component>
+        </div>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import Alert from '../components/Alert.vue'
 import ArticleTable from '../components/ArticleTable.vue'
-import CreateArticle from './CreateArticle.vue'
-
+import ModifyArticle from '../components/ModifyArticle.vue'
+import CreateArticle from '../components/CreateArticle.vue'
+import OutsideBox from '../components/OutsideBox.vue'
+import { mapActions, mapGetters } from 'vuex'
 export default {
     name: 'ShowArticle',
     components: {
         Alert,
         ArticleTable,
+        ModifyArticle,
         CreateArticle,
+        OutsideBox,
+    },
+    data() {
+        return {
+            shows: 0,
+            components: [
+                { name: 'All articles', id: 'ArticleTable' },
+                { name: 'Create', id: 'ModifyArticle' },
+            ],
+        }
+    },
+    computed: {
+        ...mapGetters(['boxMessage', 'article']),
     },
     methods: {
-        createArticle() {
-            this.$store.commit('createArticle', true)
+        ...mapActions(['clearArticle', 'clearMessage', 'alertAction']),
+        clickedNav(index) {
+            this.clearArticle()
+            this.alertAction(false)
+            index ? this.$store.commit('createArticle', true) : null
+            this.shows = index
         },
     },
 }

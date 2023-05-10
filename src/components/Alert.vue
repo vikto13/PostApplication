@@ -19,12 +19,14 @@ export default {
     },
     watch: {
         'alert.show'() {
-            if (this.alert.setTimer) {
-                this.alert.show ? this.alertAction(true) : null
+            if (!this.isShowing && this.alert.setTimer) {
+                this.isShowing = true
                 setTimeout(() => {
+                    this.isShowing = false
                     this.alertAction(false)
                 }, 3000)
-            } else {
+            } else if (!this.isShowing && !this.alert.setTimer) {
+                this.isShowing = true
                 this.alertAction(true)
             }
         },

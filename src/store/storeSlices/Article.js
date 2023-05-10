@@ -64,20 +64,17 @@ export default {
             let { title, body, author, created_at, updated_at } = state.article;
             const newArticle = { title, body, author, created_at, updated_at };
             await axios.post(`${import.meta.env.VITE_DB_URL}/articles`, newArticle)
-            commit("dismissArticle")
 
         },
         async deleteArticle({ state, commit }) {
             const { id } = state.article;
             await axios.delete(`${import.meta.env.VITE_DB_URL}/articles/${id}`)
-            commit("dismissArticle")
         },
         async updateArticle({ state, commit }) {
             commit("generateDate")
             let { title, body, author, id, created_at, updated_at } = state.article;
             const updateArticle = { title, body, author, created_at, updated_at };
             await axios.put(`${import.meta.env.VITE_DB_URL}/articles/${id}`, updateArticle)
-            commit("dismissArticle")
         },
         async searchArticles({ commit, getters }, text) {
             let { data: title } = await axios.get(`${import.meta.env.VITE_DB_URL}/articles?title_like=${text}`)
