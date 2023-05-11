@@ -6,11 +6,11 @@ const localVue = createLocalVue()
 localVue.use(Vuex)
 
 describe('ArticleTable.vue', () => {
-    // let state
-    // let getters
-    // let actions
-    // let store
-    // let mutations
+    let state
+    let getters
+    let actions
+    let store
+    let mutations
 
 
     // beforeEach(() => {
