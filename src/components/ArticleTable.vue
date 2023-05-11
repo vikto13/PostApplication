@@ -92,6 +92,7 @@ export default {
             await this.fetchArticles()
             await this.fetchAuthors()
             this.joinArticles()
+            console.log(this.article)
         } catch {
             this.alertInfo.setTimer = false
             this.alertTrigger()
@@ -131,7 +132,6 @@ export default {
                 await this.getArticle(id)
                 this.$store.commit('createArticle', false)
             } catch {
-                console.log('2222')
                 this.alertTrigger(
                     Styles.danger,
                     'something went wrong, try again',

@@ -30,7 +30,7 @@ export default {
                 this.isShowing = true
                 setTimeout(() => {
                     this.isShowing = false
-                    this.alertAction(false)
+                    this.alertAction(null)
                     return
                 }, 3000)
             } else {
