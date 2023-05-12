@@ -4,32 +4,33 @@ export default {
     state: {
         ...MessageState(),
         boxMessage: false,
-        messageStyle: [
-            {
+        messageStyle: {
+            1: {
                 text: "Something went wrong, try again",
                 type: Styles.danger
             },
-            {
+            2: {
                 text: "Please write text in all fields",
                 type: Styles.danger
             },
-            {
+            3: {
                 text: "Are you sure you want delete this article?",
                 type: Styles.danger
             },
-            {
+            4: {
                 text: "Successfully, your article is saved",
                 type: Styles.success
             },
-            {
+            5: {
                 text: "Successfully, you edited this article",
                 type: Styles.success
             },
-            {
+            6: {
                 text: "Successfully, you deleted this article",
                 type: Styles.success
-            }
-        ]
+            },
+
+        }
     },
     mutations: {
         setToShowMessage: (state, info) => {

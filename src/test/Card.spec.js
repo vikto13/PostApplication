@@ -8,21 +8,6 @@ localVue.use(VueRouter)
 const router = new VueRouter()
 
 describe("Card.vue", () => {
-
-    // const wrapper = shallowMount(Card, {
-    //     localVue,
-    //     router
-    // })
-
-
-    // it('stays on the same page when button is clicked', async () => {
-    //     // const button = wrapper.find('.btn-danger')
-    //     const button = wrapper.find('button')
-    //     console.log(button.classes())
-    //     await button.trigger('click')
-    //     console.log(wrapper.vm.$route.path)
-    // })
-
     const propsData = {
         texts: [1, 'Author', 'Date', 'Title'],
         id: 1,

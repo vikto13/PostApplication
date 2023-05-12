@@ -8,12 +8,15 @@
                 <div
                     class="modal-header text-white d-flex flex-dirextion-row"
                     :class="boxMessage ? `bg-${boxMessage.type}` : null"
-                    @click="exit"
                 >
                     <div v-if="boxMessage" style="flex: 1">
                         {{ boxMessage.text }}
                     </div>
-                    <button type="button" class="btn-close"></button>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        @click="exit"
+                    ></button>
                 </div>
                 <slot></slot>
             </div>
@@ -34,14 +37,10 @@ export default {
             'fetchArticles',
         ]),
         async exit() {
-            try {
-                this.clearMessage()
-                this.clearArticle()
-                await this.fetchArticles()
-                this.joinArticles()
-            } catch {
-                console.log('some')
-            }
+            this.clearMessage()
+            this.clearArticle()
+            await this.fetchArticles()
+            this.joinArticles()
         },
     },
 }

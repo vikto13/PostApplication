@@ -2,7 +2,7 @@ import { shallowMount } from '@vue/test-utils'
 import Message from '../components/Message.vue'
 import { describe, it, expect } from "vitest";
 
-describe('Message', () => {
+describe('Message.vue', () => {
     let wrapper
     let props = {
         show: true,
@@ -11,12 +11,7 @@ describe('Message', () => {
         bodyText: 'Your action was successful!',
         buttons: ['OK'],
     }
-
-    // afterEach(() => {
-    //     wrapper.destroy()
-    // })
-
-    it('does not renders the component', () => {
+    it('should not render the component', () => {
         props.show = false
         wrapper = shallowMount(Message, {
             computed: {
@@ -25,7 +20,7 @@ describe('Message', () => {
         })
         expect(wrapper.find('.modal').isVisible()).toBe(false)
     })
-    it('displays the correct title text in the header', () => {
+    it('should display the correct title text in the header', () => {
         expect(wrapper.find('.modal-title').text()).toBe('Success')
     })
 
@@ -45,7 +40,5 @@ describe('Message', () => {
         const button = wrapper.find('.btn')
         await button.trigger('click');
         expect(wrapper.find('.modal').isVisible()).toBe(false)
-
     })
-
 })

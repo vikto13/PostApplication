@@ -60,7 +60,6 @@ export default {
     data() {
         return {
             searchText: '',
-
             articleId: null,
             message: {
                 messageType: Styles.danger,
@@ -71,12 +70,7 @@ export default {
         }
     },
     computed: {
-        ...mapGetters([
-            'articleList',
-            'authorsList',
-            'pagination',
-            'showArticles',
-        ]),
+        ...mapGetters(['articleList', 'pagination', 'showArticles']),
         articlePart() {
             let { currentPage, pageSlice } = this.pagination
             let show = currentPage * pageSlice
@@ -92,17 +86,18 @@ export default {
             await this.fetchArticles()
             await this.fetchAuthors()
             this.joinArticles()
-            console.log(this.article)
         } catch {
-            this.alertInfo.setTimer = false
-            this.alertTrigger()
+            this.alertTrigger(
+                Styles.danger,
+                'Something went wrong, try again',
+                true
+            )
         }
     },
     methods: {
         ...mapActions([
             'fetchArticles',
             'fetchAuthors',
-            'showMessage',
             'deleteArticle',
             'getArticle',
             'joinArticles',

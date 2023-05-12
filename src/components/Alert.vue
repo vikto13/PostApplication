@@ -24,7 +24,6 @@ export default {
     watch: {
         'alert.show'() {
             if (this.alert.show == null) {
-                this.alertAction(null)
                 return
             } else if (!this.isShowing && this.alert.setTimer) {
                 this.isShowing = true

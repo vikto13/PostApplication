@@ -1,6 +1,6 @@
 <template>
     <div v-show="show">
-        <div class="modal-body">
+        <div v-show="!deleteIt" class="modal-body">
             <div class="row">
                 <div class="col-sm">
                     <label>Title</label>
@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="col-sm">
-                    <label>{{ text[Number(article.create)] }}</label>
+                    <label>{{ text[Number(!article.id)] }}</label>
                     <select
                         class="form-control"
                         v-model="article.author"
@@ -45,7 +45,11 @@
                     ></textarea>
                 </div>
 
-                <div v-show="article.id" class="col-sm" style="padding-top: 2%">
+                <div
+                    v-show="article.id != null"
+                    class="col-sm"
+                    style="padding-top: 2%"
+                >
                     <label>Created date</label>
                     <input
                         type="text"
@@ -58,7 +62,9 @@
         </div>
         <div class="modal-footer f-flex justify-content-center">
             <button
-                v-for="(button, index) in buttons[Number(!article.id)]"
+                v-for="(button, index) in buttons[
+                    deleteIt ? 2 : Number(!article.id)
+                ]"
                 :key="index"
                 type="button"
                 class="btn article-button"
@@ -81,33 +87,30 @@ export default {
     mixins: [DateMixin, MessageMixin],
     data() {
         return {
-            buttons: { 1: ['Create'], 0: ['Delete', 'Edit'] },
+            buttons: {
+                1: ['Create'],
+                0: ['Delete', 'Edit'],
+                2: ['Delete', 'Cancel'],
+            },
             text: { 0: 'Author', 1: 'Choose author' },
             type: Styles.primary,
             show: true,
-            delete: false,
+            deleteIt: false,
         }
     },
     computed: {
-        ...mapGetters([
-            'articleList',
-            'authorsList',
-            'article',
-            'message',
-            'boxMessage',
-        ]),
+        ...mapGetters(['authorsList', 'article', 'message', 'boxMessage']),
     },
     methods: {
         ...mapActions([
-            'fetchArticles',
-            'fetchAuthors',
-            'clearArticle',
             'saveArticle',
             'deleteArticle',
             'updateArticle',
-            'joinArticles',
-            'clearMessage',
             'showBoxMessage',
+            'clearMessage',
+            'clearArticle',
+            'fetchArticles',
+            'joinArticles',
         ]),
         isNotValid(check) {
             return this.boxMessage && check ? `is-invalid` : null
@@ -118,17 +121,17 @@ export default {
         async buttonPressed(index) {
             let { author, body, title } = this.article
             if (!title || typeof author != 'number' || !body) {
-                this.article.create
+                this.article.id != null
                     ? this.alertTrigger(
                           Styles.danger,
                           'Write text in all fields',
                           false
                       )
-                    : this.showBoxMessage(1)
+                    : this.showBoxMessage(5)
                 return
             }
             try {
-                if (this.article.create) {
+                if (this.article.id == null) {
                     await this.saveArticle()
                     this.alertTrigger(
                         Styles.success,
@@ -137,26 +140,33 @@ export default {
                     )
                     this.show = false
                 } else {
-                    if (index) {
+                    if (index && !this.deleteIt) {
                         await this.updateArticle()
                         this.showBoxMessage(4)
-                    } else if (!this.delete) {
-                        this.delete = true
-                        this.showBoxMessage(2)
+                    } else if (!this.deleteIt) {
+                        this.deleteIt = true
+                        this.showBoxMessage(3)
                     } else {
-                        await this.deleteArticle()
-                        this.show = false
-                        this.showBoxMessage(5)
+                        if (index) {
+                            this.deleteIt = false
+                            this.showBoxMessage(0)
+                        } else {
+                            await this.deleteArticle()
+                            this.clearMessage()
+                            this.clearArticle()
+                            await this.fetchArticles()
+                            this.joinArticles()
+                        }
                     }
                 }
             } catch {
-                this.article.create
+                this.article.id == null
                     ? this.alertTrigger(
                           Styles.danger,
                           'Something went wrong, try again',
                           false
                       )
-                    : this.showBoxMessage(3)
+                    : this.showBoxMessage(1)
             }
         },
     },

@@ -20,7 +20,6 @@ export default {
     actions: {
         async fetchAuthors({ commit }) {
             const { data } = await axios.get(`${import.meta.env.VITE_DB_URL}/authors`);
-            console.log(data)
             commit("setAuthors", data)
         },
         async fetchAuthor({ commit }, id) {

@@ -40,7 +40,6 @@ export default {
         },
         setAuthor: (state, author) => {
             state.article.author = Number(author)
-            console.log(state)
         },
         setBody: (state, body) => {
             state.article.body = body
