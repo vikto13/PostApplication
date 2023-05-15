@@ -47,9 +47,9 @@ export default {
         ...mapGetters(['message']),
     },
     methods: {
-        ...mapActions(['pressButton']),
+        ...mapActions(['pressMessageButton']),
         buttonIsPressed(index) {
-            this.pressButton()
+            this.pressMessageButton()
             this.$emit('button-pressed', index)
         },
     },

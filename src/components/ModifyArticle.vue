@@ -16,12 +16,14 @@
                 </div>
 
                 <div class="col-sm">
-                    <label>{{ text[Number(!article.id)] }}</label>
+                    <label>{{
+                        text[Number(typeof article.id == 'number')]
+                    }}</label>
                     <select
                         class="form-control"
                         v-model="article.author"
                         @input="(data) => changeValue('setAuthor', data)"
-                        :class="isNotValid(typeof article.author != 'number')"
+                        :class="isNotValid(article.author == null)"
                         :disabled="article.id"
                     >
                         <option
@@ -63,7 +65,7 @@
         <div class="modal-footer f-flex justify-content-center">
             <button
                 v-for="(button, index) in buttons[
-                    deleteIt ? 2 : Number(!article.id)
+                    deleteIt ? 2 : Number(typeof article.id == 'number')
                 ]"
                 :key="index"
                 type="button"
@@ -88,11 +90,11 @@ export default {
     data() {
         return {
             buttons: {
-                1: ['Create'],
-                0: ['Delete', 'Edit'],
+                0: ['Create'],
+                1: ['Delete', 'Edit'],
                 2: ['Delete', 'Cancel'],
             },
-            text: { 0: 'Author', 1: 'Choose author' },
+            text: { 0: 'Choose author', 1: 'Author' },
             type: Styles.primary,
             show: true,
             deleteIt: false,
@@ -113,6 +115,7 @@ export default {
             'joinArticles',
         ]),
         isNotValid(check) {
+            console.log(check, '//')
             return this.boxMessage && check ? `is-invalid` : null
         },
         changeValue(whoUpdate, { target }) {

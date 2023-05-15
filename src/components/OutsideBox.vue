@@ -27,7 +27,7 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
     computed: {
-        ...mapGetters(['boxMessage', 'article']),
+        ...mapGetters(['boxMessage']),
     },
     methods: {
         ...mapActions([

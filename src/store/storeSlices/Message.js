@@ -55,7 +55,7 @@ export default {
         showMessage({ commit }, setData) {
             commit("setToShowMessage", setData)
         },
-        pressButton({ commit }) {
+        pressMessageButton({ commit }) {
             commit("messageIsPressed")
         },
         showBoxMessage({ commit }, who) {
