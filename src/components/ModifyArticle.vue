@@ -115,7 +115,6 @@ export default {
             'joinArticles',
         ]),
         isNotValid(check) {
-            console.log(check, '//')
             return this.boxMessage && check ? `is-invalid` : null
         },
         changeValue(whoUpdate, { target }) {
